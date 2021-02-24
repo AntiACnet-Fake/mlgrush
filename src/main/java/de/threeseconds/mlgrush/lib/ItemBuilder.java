@@ -2,6 +2,7 @@ package de.threeseconds.mlgrush.lib;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -18,6 +19,8 @@ public class ItemBuilder {
     private String displayName;
     private Color color;
     private List<String> lore;
+    private Enchantment enchantment;
+    private int level;
     private Boolean glow = false;
     private Boolean unbreakable = false;
 
@@ -54,9 +57,22 @@ public class ItemBuilder {
         this.lore = Arrays.asList(lore);
     }
 
-    public ItemBuilder(Material material, Color color){
+    public ItemBuilder(Material material, Integer amount, Short durability, String displayName, Enchantment enchantment, int level){
         this.material = material;
+        this.amount = amount;
+        this.durability = durability;
+        this.displayName = displayName;
+        this.enchantment = enchantment;
+        this.level = level;
+    }
+
+    public ItemBuilder(Material material, Color color, String displayName, String... lore){
+        this.material = material;
+        this.amount = 1;
         this.color = color;
+        this.displayName = displayName;
+        this.durability = (short)0;
+        this.lore = Arrays.asList(lore);
     }
 
     public ItemStack build() {
@@ -65,6 +81,8 @@ public class ItemBuilder {
         if(this.color != null) {
             LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta)itemStack.getItemMeta();
             leatherArmorMeta.setColor(color);
+            leatherArmorMeta.setDisplayName(displayName);
+            leatherArmorMeta.setLore(lore);
 
             itemStack.setItemMeta(leatherArmorMeta);
             return itemStack;
@@ -76,6 +94,10 @@ public class ItemBuilder {
         }
         if(this.lore != null){
             itemMeta.setLore(this.lore);
+        }
+        if(this.enchantment != null) {
+            itemMeta.addEnchant(this.enchantment, this.level, true);
+
         }
         itemStack.setItemMeta(itemMeta);
 
