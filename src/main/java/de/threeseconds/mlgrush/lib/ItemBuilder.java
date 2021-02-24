@@ -1,8 +1,10 @@
 package de.threeseconds.mlgrush.lib;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class ItemBuilder {
     private Integer amount;
     private Short durability;
     private String displayName;
+    private Color color;
     private ArrayList<String> lore;
     private Boolean glow = Boolean.valueOf(false);
     private Boolean unbreakable = Boolean.valueOf(false);
@@ -51,8 +54,22 @@ public class ItemBuilder {
         this.lore = lore;
     }
 
+    public ItemBuilder(Material material, Color color){
+        this.material = material;
+        this.color = color;
+    }
+
     public ItemStack build() {
         ItemStack itemStack = new ItemStack(this.material, this.amount, this.durability);
+
+        if(this.color != null) {
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta)itemStack.getItemMeta();
+            leatherArmorMeta.setColor(color);
+
+            itemStack.setItemMeta(leatherArmorMeta);
+            return itemStack;
+        }
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(this.displayName != null){
             itemMeta.setDisplayName(this.displayName);
