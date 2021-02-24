@@ -7,6 +7,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemBuilder {
 
@@ -15,22 +17,20 @@ public class ItemBuilder {
     private Short durability;
     private String displayName;
     private Color color;
-    private ArrayList<String> lore;
-    private Boolean glow = Boolean.valueOf(false);
-    private Boolean unbreakable = Boolean.valueOf(false);
-
-    public ItemBuilder() {}
+    private List<String> lore;
+    private Boolean glow = false;
+    private Boolean unbreakable = false;
 
     public ItemBuilder(Material material){
         this.material = material;
-        this.amount = Integer.valueOf(1);
-        this.durability = Short.valueOf((short)0);
+        this.amount = 1;
+        this.durability = (short) 0;
     }
 
     public ItemBuilder(Material material, Integer amount){
         this.material = material;
         this.amount = amount;
-        this.durability = Short.valueOf((short)0);
+        this.durability = (short) 0;
     }
 
     public ItemBuilder(Material material, Integer amount, Short durability){
@@ -46,12 +46,12 @@ public class ItemBuilder {
         this.displayName = displayName;
     }
 
-    public ItemBuilder(Material material, Integer amount, Short durability, String displayName, ArrayList<String> lore){
+    public ItemBuilder(Material material, Integer amount, Short durability, String displayName, String... lore){
         this.material = material;
         this.amount = amount;
         this.durability = durability;
         this.displayName = displayName;
-        this.lore = lore;
+        this.lore = Arrays.asList(lore);
     }
 
     public ItemBuilder(Material material, Color color){
